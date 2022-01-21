@@ -2,17 +2,78 @@
 html, body
 {
 	height: 100%;
+	margin: 0px;
 }
 
-button
+div {}
+
+#background
 {
-
+	height: 100%;
+	z-index: 0;
 }
 
-#refresh_button
+#navigation_bar
+{
+	height: 60px;
+	width: 99%;
+
+	position: absolute;
+	top: 0%;
+
+	/* Centers by being half of difference of width */
+	left: .5%;
+
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+	z-index: 1;
+}
+
+
+button {}
+
+.background
 {
 	background-color: lightblue;
 	height: 100%;
 	width:  100%;
 	border: none;
+}
+
+.test
+{
+	background-color: red;
+	height: 100%;
+	width: 100%;
+	border: none;
+}
+
+img {}
+
+.navigation_icon
+{
+	height: 64px;
+	width: 64px;
+}
+
+a {}
+
+.navigation_button
+{	
+	display: block;
+	border-radius: 32px;
+	position: relative;
+	height: 64px;
+	width: 64px;
+}
+
+a.navigation_button:link, a.navigation_button:visited
+{
+	background-color: white;
+}
+
+a.navigation_button:hover
+{
+	opacity: 75%;
 }

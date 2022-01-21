@@ -1,12 +1,10 @@
 #include "main.h"
 
 void Output(const char*, ...);
+int find_nth(const std::string &, const std::string &, int);
 
 int main(void)
 {
-	WebScraper webScraper;
-	webScraper.Download();
-	/*/
 	std::ifstream SQL_login;
 	try
 	{
@@ -31,8 +29,8 @@ int main(void)
 	const std::string localHost = "localhost";
 	const std::string username = line.substr(0, pos1);
 	const std::string password = line.substr(pos1 + 1);
-	string tableName = "info";
-	string dbName = "books_db";
+	std::string tableName = "books_info";
+	std::string dbName = "books_db";
 
 	mysqlx::Session session(mysqlx::SessionOption::USER, username,
 							mysqlx::SessionOption::PWD, password,
@@ -41,9 +39,11 @@ int main(void)
 	
 	SQL_login.close();
 
-	
+	// Create Database
 	session.sql("create database if not exists " + dbName + ";").execute();
 	session.sql("use " + dbName + ";").execute();
+
+	// Create Table
 	session.sql("create table if not exists " + tableName + "(name varchar(100), author varchar(100), date_published varchar(4));").execute();
 	session.sql("truncate table " + tableName + ";").execute();
 
@@ -55,29 +55,44 @@ int main(void)
 	getline(file, line);
 
 	name = line.substr(0, line.find(";"));
-	author = line.substr(line.find(";") + 1, line.find(";", 2));
-	published = line.substr(line.find(";", 2) + 1, 4);
+	author = line.substr(line.find(";") + 1, find_nth(line, ";", 2) - (line.find(";") + 1));
+	published = line.substr(find_nth(line, ";", 2) + 1, 4);
 
-	Output(name.c_str(), author.c_str(), published.c_str());
-
-	/*
 	while (getline(file, line))
 	{
 		name = line.substr(0, line.find(";"));
-		author = line.substr(line.find(";") + 1, line.find(";", 2));
-		published = line.substr(line.find(";", 2) + 1, 4);
+		author = line.substr(line.find(";") + 1, find_nth(line, ";", 2) - (line.find(";") + 1));
+		published = line.substr(find_nth(line, ";", 2) + 1, 4);
 
-		std::cout << name + " " + author + " " + published + "\n";
-		std::cin.get();
-
-		session.sql("INSERT INTO " + tableName + "(" + name + ", " + author + ", " + published + ")").execute();
+		std::string str = "insert into " + tableName + " values ('" + name + "', '" + author + "', " + published + ");";
+		session.sql(str).execute();
 	}
-	
+
 	file.close();
-	*/
+
 	return 0;
 }
 
+
+// Needed to find the nth occurance of a char
+// Source: https://stackoverflow.com/questions/18972258/index-of-nth-occurrence-of-the-string
+int find_nth(const std::string& str, const std::string& key, int nth)
+{
+	size_t pos = 0;
+	int cnt = 0;
+
+	while (cnt != nth)
+	{
+		pos += 1;
+		pos = str.find(key, pos);
+		if (pos == std::string::npos) { return 1; }
+		cnt++;	
+	}
+
+	return pos;
+}
+
+// Outputs strings.c_str() into debug window
 void Output(const char* szFormat, ...)
 {
 	char szBuff[1024];

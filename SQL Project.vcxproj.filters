@@ -26,26 +26,14 @@
     <None Include="Data\site.html">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="SQL\init.sql">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="SQL\query.sql">
-      <Filter>Resource Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Code\web_scraper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Code\web_scraper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

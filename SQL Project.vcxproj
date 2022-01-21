@@ -154,16 +154,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\site.html" />
-    <None Include="SQL\init.sql" />
-    <None Include="SQL\query.sql" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\main.cpp" />
-    <ClCompile Include="Code\web_scraper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\main.h" />
-    <ClInclude Include="Code\web_scraper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

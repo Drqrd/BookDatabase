@@ -5,17 +5,16 @@ html, body
 	margin: 0px;
 }
 
-div {}
-
-#background
+#div_background
 {
 	height: 100%;
 	z-index: 0;
 }
 
-#navigation_bar
+#div_navigation_bar
 {
-	height: 60px;
+	background-color: blue;
+	height: 70px;
 	width: 99%;
 
 	position: absolute;
@@ -30,10 +29,7 @@ div {}
 	z-index: 1;
 }
 
-
-button {}
-
-.background
+.button_background
 {
 	background-color: lightblue;
 	height: 100%;
@@ -41,7 +37,7 @@ button {}
 	border: none;
 }
 
-.test
+.button_test
 {
 	background-color: red;
 	height: 100%;
@@ -49,31 +45,46 @@ button {}
 	border: none;
 }
 
-img {}
-
-.navigation_icon
+.img_navigation_icon
 {
 	height: 64px;
 	width: 64px;
 }
 
-a {}
-
-.navigation_button
+.a_circle
 {	
-	display: block;
+	display: inline-block;
 	border-radius: 32px;
 	position: relative;
 	height: 64px;
 	width: 64px;
 }
 
-a.navigation_button:link, a.navigation_button:visited
+a.a_circle:link, a.a_circle:visited
 {
 	background-color: white;
 }
 
-a.navigation_button:hover
+a.a_circle:hover
+{
+	opacity: 75%;
+}
+
+.a_rounded
+{	
+	display: inline-block;
+	border-radius: 5px;
+	position: relative;
+	height: 64px;
+	width: 64px;
+}
+
+a.a_rounded:link, a.a_rounded:visited
+{
+	background-color: white;
+}
+
+a.a_rounded:hover
 {
 	opacity: 75%;
 }

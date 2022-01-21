@@ -1,8 +1,19 @@
 #include "main.h"
 
-void Output(const char*, ...);
-int find_nth(const std::string &, const std::string &, int);
-
+/*
+* ---- C4267 IGNORED ----
+*
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+*/
 int main(void)
 {
 	std::ifstream SQL_login;
@@ -29,8 +40,6 @@ int main(void)
 	const std::string localHost = "localhost";
 	const std::string username = line.substr(0, pos1);
 	const std::string password = line.substr(pos1 + 1);
-	std::string tableName = "books_info";
-	std::string dbName = "books_db";
 
 	mysqlx::Session session(mysqlx::SessionOption::USER, username,
 							mysqlx::SessionOption::PWD, password,
@@ -39,34 +48,76 @@ int main(void)
 	
 	SQL_login.close();
 
-	// Create Database
-	session.sql("create database if not exists " + dbName + ";").execute();
-	session.sql("use " + dbName + ";").execute();
+	std::string tableName = "books_info";
+	std::string dbName = "books_db";
+	std::string c1 = "name", c2 = "author", c3 = "date_published";
 
-	// Create Table
-	session.sql("create table if not exists " + tableName + "(name varchar(100), author varchar(100), date_published varchar(4));").execute();
-	session.sql("truncate table " + tableName + ";").execute();
+	/* C++ Connector Code */
+	// * If database already exists, drop it
+	if (session.getSchema(dbName).existsInDatabase()) { session.dropSchema(dbName); }
+	// * Create Database
+	mysqlx::Schema db = session.createSchema(dbName);
+
+	// * Create Table (Cant find method to specify columns, using SQL code for this)
+	// mysqlx::Table table(db, tableName);
+
+
+	/**********************/
+
+	/* ---- SQL Code ---- */
+	// * Create Database
+	// session.sql("create database if not exists " + dbName + ";").execute();
+
+	// * specify database that will contain the table
+	session.sql("use " + dbName + ";").execute();
+ 
+	// * Create Table
+	session.sql("create table if not exists " + tableName + "(" + c1 + " varchar(100), " + c2 + " varchar(100), " + c3 + " varchar(5));").execute();
+	
+	/*********************/
+
+	// * Get table
+	mysqlx::Table table = db.getTable(tableName);
 
 	std::ifstream file;
 	file.open("Data/book_data.txt");
 
 	std::string name, author, published;
-
-	getline(file, line);
-
-	name = line.substr(0, line.find(";"));
-	author = line.substr(line.find(";") + 1, find_nth(line, ";", 2) - (line.find(";") + 1));
-	published = line.substr(find_nth(line, ";", 2) + 1, 4);
-
+	mysqlx::TableInsert tableInsert(table);
 	while (getline(file, line))
 	{
+		// Find substrings with seperator charactor ";"
 		name = line.substr(0, line.find(";"));
 		author = line.substr(line.find(";") + 1, find_nth(line, ";", 2) - (line.find(";") + 1));
 		published = line.substr(find_nth(line, ";", 2) + 1, 4);
 
-		std::string str = "insert into " + tableName + " values ('" + name + "', '" + author + "', " + published + ");";
-		session.sql(str).execute();
+		/* C++ Connector Code */
+		// * Insert into table
+		tableInsert.values(name, author, published);
+
+		/**********************/
+
+
+		/* ---- SQL Code ---- */
+		// std::string str = "insert into " + tableName + " values ('" + name + "', '" + author + "', " + published + ");";
+		// session.sql(str).execute();
+
+		/**********************/
 	}
+	
+	// Execute the tableInsert
+	tableInsert.execute();
+
+	/* C++ Connector Code */
+	// Show all entries through console
+	mysqlx::RowResult rr = table.select(c1,c2,c3).execute();
+	for (mysqlx::Row row : rr.fetchAll())
+	{
+		std::cout << row[0] << ", ";
+		std::cout << row[1] << ", ";
+		std::cout << row[2] << std::endl;
+	}
+	/**********************/
 
 	file.close();
 
@@ -78,7 +129,7 @@ int main(void)
 // Source: https://stackoverflow.com/questions/18972258/index-of-nth-occurrence-of-the-string
 int find_nth(const std::string& str, const std::string& key, int nth)
 {
-	size_t pos = 0;
+	int pos = 0;
 	int cnt = 0;
 
 	while (cnt != nth)
@@ -93,7 +144,7 @@ int find_nth(const std::string& str, const std::string& key, int nth)
 }
 
 // Outputs strings.c_str() into debug window
-void Output(const char* szFormat, ...)
+void output(const char* szFormat, ...)
 {
 	char szBuff[1024];
 	va_list arg;

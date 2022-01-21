@@ -1,0 +1,18 @@
+
+html, body
+{
+	height: 100%;
+}
+
+button
+{
+
+}
+
+#refresh_button
+{
+	background-color: lightblue;
+	height: 100%;
+	width:  100%;
+	border: none;
+}

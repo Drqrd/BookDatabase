@@ -23,11 +23,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\site.html">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Code\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

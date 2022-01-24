@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Book DB</title>
+	<link rel="stylesheet" href="styles.css">
+	<script type="text/javascript" src="func.js"></script>
+</head>
+<body>
+	<div id="background">
+		<div id="navigation_bar">
+			<span id="navigation_left">
+				<h1 id="navigation_title">1000 Books</h1> 
+			</span>
+			<span id="navigation_right"> 
+				<a class="navigation_icon" style="border-radius: 32px;" href="https://github.com/Drqrd" target="_blank">
+					<img class="navigation_icon" style="border-radius: 32px;" src="GitHub-Icon-512px.png" alt="github">
+				</a>
+				<a class="navigation_icon" style="border-radius: 8px;" href="https://www.linkedin.com/in/jmderrico/" target="_blank">
+					<img class="navigation_icon" style="border-radius: 8px;" src="Linked-In-Icon-512px.png" alt="linkedin">
+				</a>
+			</span>
+		</div>
+		<div id="body_left">
+			<div id="search_bar">
+				<form id="search_bar">
+					<input type="text" id="search_bar" placeholder="Search by Name, Author, or Date...">
+				</form>
+				<button id="search_submit">
+					<img class="search_icon" src="Search-Icon-512px.png" alt="search">
+				</button>
+			</div>
+			<div id="content_sorting_wrapper">
+				<span class="content_sorting" style="border-top-left-radius: 8px; border-bottom-left-radius: 8px;" onClick="sort">
+					Title
+
+				</span>
+				<span class="content_sorting" onClick="sort">
+					Author
+				</span>
+				<span class="content_sorting" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px;" onClick="sort">
+					Published
+				</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

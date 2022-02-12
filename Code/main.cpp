@@ -108,6 +108,14 @@ int main(void)
 	// Execute the tableInsert
 	tableInsert.execute();
 
+	// Remove duplicate entries
+	std::string cmd1 = "create table cpy select distinct " + c1 + ", " + c2 + ", " + c3 + " from " + tableName + ";";
+	std::string cmd2 = "truncate " + tableName + ";"; 
+	std::string cmd3 = "insert into " + tableName + " select * from cpy";
+	session.sql(cmd1).execute();
+	session.sql(cmd2).execute();
+	session.sql(cmd3).execute();
+
 	/* C++ Connector Code */
 	// Show all entries through console
 	mysqlx::RowResult rr = table.select(c1,c2,c3).execute();
